@@ -32,23 +32,21 @@ public class JGitUtil {
 		SQL_CALC, EMAIL, MYSQL_TO_HIVE, HIVE_TO_MYSQL
 	}
 	final static Logger LOG = LoggerFactory.getLogger(JGitUtil.class);
-	final static PropertyUtil prop = PropertyUtil.getInstance();
-
+	//final static PropertyUtil prop = PropertyUtil.getInstance();
 	static {
-		LOCAL_REPO_PATH = prop.getProperty("local_repo_path"); // D:/workspace/project
-		LOCAL_REPOGIT_CONFIG = prop.getProperty("local_repogit_config"); // D:/workspace/project/.git
-		REMOTE_REPO_URI = prop.getProperty("remote_repo_uri"); // git@github.com:xxx/project.git
-		INIT_LOCAL_CODE_DIR = prop.getProperty("init_local_code_dir"); // D:/workspace
-		LOCAL_CODE_CT_SQL_DIR = prop.getProperty("local_code_ct_sql_dir"); // sqlpath/
-		BRANCH_NAME = prop.getProperty("branch_name"); // v1.0
-		GIT_USERNAME = prop.getProperty("git_username"); // admin
-		GIT_PASSWORD = prop.getProperty("git_password"); // admin
+		//		LOCAL_REPO_PATH = prop.getProperty("local_repo_path"); // D:/workspace/project
+		//		LOCAL_REPOGIT_CONFIG = prop.getProperty("local_repogit_config"); // D:/workspace/project/.git
+		//		REMOTE_REPO_URI = prop.getProperty("remote_repo_uri"); // git@github.com:xxx/project.git
+		//		INIT_LOCAL_CODE_DIR = prop.getProperty("init_local_code_dir"); // D:/workspace
+		//		LOCAL_CODE_CT_SQL_DIR = prop.getProperty("local_code_ct_sql_dir"); // sqlpath/
+		//		BRANCH_NAME = prop.getProperty("branch_name"); // v1.0
+		//		GIT_USERNAME = prop.getProperty("git_username"); // admin
+		//		GIT_PASSWORD = prop.getProperty("git_password"); // admin
 	}
 
 	public static void main(String[] args) {
 		writeFileToGit(SqlTypeEnum.EMAIL, "xxx", "-- 测试hehe \n select * from dual;", "test_测试_201806071322", "test");
 	}
-
 	/**
 	 * sql脚本文件同步到git仓库
 	 * @param qte         SQl类型
@@ -71,7 +69,6 @@ public class JGitUtil {
 		comment = loginName + " option of " + comment;
 		return true == JGitUtil.createFile(sqlConent, path) == JGitUtil.commitAndPush(dest, comment);
 	}
-
 	/**
 	 * 根据主干master新建分支并同步到远程仓库
 	 * @param branchName 分支名
@@ -103,7 +100,6 @@ public class JGitUtil {
 		//        }
 		return gitPathURI;
 	}
-
 	/**
 	 * 添加文件
 	 * @param fileName
@@ -128,7 +124,6 @@ public class JGitUtil {
 		}
 		return addFileFlag;
 	}
-
 	/**
 	 * 提交代码到本地仓库
 	 * @param filePath 文件位置(相对仓库位置:a/b/file)
@@ -148,7 +143,6 @@ public class JGitUtil {
 		}
 		return commitFileFlag;
 	}
-
 	public static boolean push() {
 		boolean pushFlag = true;
 		try (Git git = Git.open(new File(LOCAL_REPOGIT_CONFIG));) {
@@ -162,7 +156,6 @@ public class JGitUtil {
 		}
 		return pushFlag;
 	}
-
 	/**
 	 * 提交并推送代码至远程服务器
 	 * @param filePath 提交文件路径(相对路径)
@@ -193,7 +186,6 @@ public class JGitUtil {
 		}
 		return commitAndPushFlag;
 	}
-
 	/**
 	 * 拉取远程代码
 	 * @param remoteBranchName
@@ -202,7 +194,6 @@ public class JGitUtil {
 	public static boolean pull() {
 		return pull(BRANCH_NAME);
 	}
-
 	public static boolean pull(String remoteBranchName) {
 		boolean pullFlag = true;
 		try (Git git = Git.open(new File(LOCAL_REPOGIT_CONFIG));) {
@@ -216,7 +207,6 @@ public class JGitUtil {
 		}
 		return pullFlag;
 	}
-
 	public static boolean checkout(String branchName) {
 		boolean checkoutFlag = true;
 		try (Git git = Git.open(new File(LOCAL_REPOGIT_CONFIG));) {
@@ -227,11 +217,9 @@ public class JGitUtil {
 		}
 		return checkoutFlag;
 	}
-
 	public static boolean checkout() {
 		return checkout(BRANCH_NAME);
 	}
-
 	/**
 	 * 从远程获取最新版本到本地   不会自动合并 merge
 	 * @param branchName
@@ -247,7 +235,6 @@ public class JGitUtil {
 		}
 		return fetchFlag;
 	}
-
 	/**
 	 * 拉取新创建的分支到本地
 	 * @param cloneURL
@@ -275,7 +262,6 @@ public class JGitUtil {
 		}
 		return resultFlag;
 	}
-
 	private static void deleteFolder(File file) {
 		if (file.isFile() || file.list().length == 0) {
 			file.delete();
@@ -287,7 +273,6 @@ public class JGitUtil {
 			}
 		}
 	}
-
 	/**
 	 * 生成文件写内容
 	 * @param content  文件内容
@@ -328,7 +313,6 @@ public class JGitUtil {
 		}
 		return createFileFlag;
 	}
-
 	/**
 	 * 创建本地新仓库
 	 * @param repoPath 仓库地址 D:/workspace/TestGitRepository
@@ -342,7 +326,6 @@ public class JGitUtil {
 		repository.create();
 		return repository;
 	}
-
 	/**
 	 * 创建仓库，仅需要执行一次
 	 */

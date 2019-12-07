@@ -1,0 +1,40 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://172.32.147.105:6999/eureka/
+server:
+  port: 8001
+spring:
+  application:
+    name: services-dbdata-backup
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@172.32.147.164:1521:bpDev
+    username: xinjiang
+    password: xinjiang
+  cloud:
+    service-registry:
+      auto-registration:
+        enabled: false
+#配置信息
+newland:
+  dbconfig:
+    dbname: db1
+    db1:
+      ip: 172.32.147.164
+      port: 1521
+      db-type: mysql
+      username: cc
+      password: ccLoveBigCabbage%^&*5783
+      #检索关键字，匹配关键字都表都会生成建表语句，并且生成数据脚本和cvs数据
+      key-names: '%conf,%dim%'
+      #最大备份记录数，0：表示全量备份，系统最多备份10w条记录。
+      max-total: 10000
+  config:
+    restTemplate:
+      connectTimeout: 5000
+      readTimeout: 10000
+
+
+
