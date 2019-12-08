@@ -17,6 +17,14 @@ import org.tmatesoft.svn.core.wc.SVNClientManager;
 import org.tmatesoft.svn.core.wc.SVNRevision;
 import org.tmatesoft.svn.core.wc.SVNUpdateClient;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
+/**
+ * @param : * @param null
+ * @author : cc
+ * @date : 2019/12/8
+ * @time : 21:44
+ * @desc :
+ * @return :
+ */
 public class SvnUtils {
 	private SVNClientManager clientManager;
 	private ISVNAuthenticationManager authManager;

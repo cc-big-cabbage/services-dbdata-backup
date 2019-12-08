@@ -19,7 +19,12 @@ import org.springframework.stereotype.Component;
 
 import javax.print.attribute.standard.NumberUp;
 /**
- * 启动加载类
+ * @author  : cc
+ * @date    : 2019/12/8
+ * @time    : 21:44
+ * @desc    :  启动加载类
+ * @param   :  * @param null
+ * @return  :
  */
 @Slf4j @Component @Order(value = 1) public class StartupRunner implements CommandLineRunner {
 	@Autowired ConfigurableApplicationContext context;
