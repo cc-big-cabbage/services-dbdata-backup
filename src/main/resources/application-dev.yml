@@ -10,9 +10,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@172.32.147.164:1521:bpDev
-    username: xinjiang
-    password: xinjiang
+    url:
+    username:
+    password:
   cloud:
     service-registry:
       auto-registration:
@@ -25,8 +25,8 @@ newland:
       ip: 172.32.147.164
       port: 1521
       db-type: mysql
-      username: cc
-      password: ccLoveBigCabbage%^&*5783
+      username:
+      password:
       #检索关键字，匹配关键字都表都会生成建表语句，并且生成数据脚本和cvs数据
       key-names: '%conf,%dim%'
       #最大备份记录数，0：表示全量备份，系统最多备份10w条记录。
