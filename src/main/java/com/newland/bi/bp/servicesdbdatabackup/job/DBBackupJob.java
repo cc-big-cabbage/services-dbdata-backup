@@ -3,7 +3,6 @@ import com.alibaba.fastjson.JSON;
 import com.newland.bi.bp.servicesdbdatabackup.services.DBBackupServices;
 import com.newland.bi.bp.servicesdbdatabackup.services.WeixinServices;
 import com.newland.bi.bp.servicesdbdatabackup.utils.GlobalConst;
-import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

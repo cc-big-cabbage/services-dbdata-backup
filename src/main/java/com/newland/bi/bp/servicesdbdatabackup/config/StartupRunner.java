@@ -46,7 +46,7 @@ import javax.print.attribute.standard.NumberUp;
 				String username = environment.getProperty("newland.dbconfig." + dbname + ".username");
 				String password = environment.getProperty("newland.dbconfig." + dbname + ".password");
 				String keynames = environment.getProperty("newland.dbconfig." + dbname + ".key-names");
-				int maxTotal = NumberUtils.toInt(environment.getProperty("newland.dbconfig." + dbname + "max-total"), 100);
+				int maxTotal = NumberUtils.toInt(environment.getProperty("newland.dbconfig." + dbname + ".max-total"), 1000);
 				if (maxTotal > 100000) {
 					maxTotal = 100000;
 				}
