@@ -25,7 +25,7 @@ import java.sql.ResultSet;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			//mysql链接sys实例
-			String jdburl = "jdbc:mysql://" + ip + ":" + port + "/mysql?useSSL=false&serverTimezone=UTC";
+			String jdburl = "jdbc:mysql://" + ip + ":" + port + "/mysql?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 			Connection conn = DriverManager.getConnection(jdburl, username, passwd);
 			return conn;
 		} catch (Exception e) {

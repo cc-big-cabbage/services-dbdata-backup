@@ -85,8 +85,10 @@ import java.util.concurrent.TimeUnit;
 			ZipUtils.toZip(mysqlBackupFilePath.getAbsolutePath(), fos1, true);
 			//上传到git---网络问题，修改为发送邮件方式备份
 			if ("1".equals(GlobalConst.sendMailFlag)) {
-				mailServices.sendAttachmentsMail(GlobalConst.mailFrom, GlobalConst.mailTos, zipFile.getName(), zipFile.getName(), zipFile);
+				mailServices.sendAttachmentsMail(GlobalConst.mailFrom, GlobalConst.mailTos, "新大陆业务产品部重要备份" + zipFile.getName(), zipFile.getName(), zipFile);
 			}
+			//发送邮件后，则删除本机备份，保留zip
+			FileUtils.deleteDirectory(mysqlBackupFilePath);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
