@@ -7,7 +7,7 @@ import com.newland.bi.bp.servicesdbdatabackup.utils.ZipUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.checkerframework.checker.units.qual.C;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 @Component @Slf4j public class MysqlBackupServices {
 	//固定线程池
 	ExecutorService executorService = Executors.newFixedThreadPool(10);
+	@Autowired private MailServices mailServices;
 
 	/**
 	 * @param : * @param null
@@ -82,8 +83,10 @@ import java.util.concurrent.TimeUnit;
 					backupFilePath.getAbsoluteFile() + File.separator + "[mysql][" + dbConfBean.getIp() + "]" + DateFormatUtils.format(System.currentTimeMillis(), "yyyyMMddHHmm") + ".zip");
 			FileOutputStream fos1 = new FileOutputStream(zipFile);
 			ZipUtils.toZip(mysqlBackupFilePath.getAbsolutePath(), fos1, true);
-			//上传到git
-
+			//上传到git---网络问题，修改为发送邮件方式备份
+			if ("1".equals(GlobalConst.sendMailFlag)) {
+				mailServices.sendAttachmentsMail(GlobalConst.mailFrom, GlobalConst.mailTos, zipFile.getName(), zipFile.getName(), zipFile);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;

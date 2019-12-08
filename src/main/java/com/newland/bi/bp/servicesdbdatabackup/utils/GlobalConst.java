@@ -18,4 +18,13 @@ public class GlobalConst {
 	 * 备份文件主目录
 	 */
 	public static String backupFilePath = "";
+	/**
+	 * 发送邮件标示
+	 */
+	public static String sendMailFlag = "0";
+	/**
+	 * 接收邮件
+	 */
+	public static String mailFrom = "chradium@163.com";
+	public static String[] mailTos = null;
 }

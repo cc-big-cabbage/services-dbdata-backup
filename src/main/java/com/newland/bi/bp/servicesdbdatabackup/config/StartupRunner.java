@@ -1,9 +1,11 @@
 package com.newland.bi.bp.servicesdbdatabackup.config;
+import com.alibaba.fastjson.JSON;
 import com.newland.bi.bp.servicesdbdatabackup.bean.DBConfBean;
 import com.newland.bi.bp.servicesdbdatabackup.services.DBBackupServices;
 import com.newland.bi.bp.servicesdbdatabackup.services.WeixinServices;
 import com.newland.bi.bp.servicesdbdatabackup.utils.GlobalConst;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
@@ -57,6 +59,19 @@ import javax.print.attribute.standard.NumberUp;
 			//加载备份主目录
 			GlobalConst.backupFilePath = environment.getProperty("newland.backup-file-path");
 			log.info("GlobalConst.backupFilePath=" + GlobalConst.backupFilePath);
+			//加载邮件相关信息
+			GlobalConst.sendMailFlag = environment.getProperty("newland.emailConfig.send-flag");
+			GlobalConst.mailFrom = environment.getProperty("spring.mail.username");
+			String mailTo = environment.getProperty("newland.emailConfig.email-to");
+			if (StringUtils.isNotBlank(mailTo)) {
+				GlobalConst.mailTos = mailTo.split(";");
+			} else {
+				//没有配置接收人，则发送标示复位
+				GlobalConst.sendMailFlag = "0";
+			}
+			log.info("GlobalConst.sendMailFlag=" + GlobalConst.sendMailFlag);
+			log.info("GlobalConst.mailFrom=" + GlobalConst.mailFrom);
+			log.info("GlobalConst.mailTos=" + JSON.toJSONString(GlobalConst.mailTos));
 			GlobalConst.dbconfList.forEach(item -> {
 				int result = dbBackupServices.backup(item);
 				switch (result) {

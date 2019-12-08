@@ -17,7 +17,7 @@ import org.tmatesoft.svn.core.wc.SVNClientManager;
 import org.tmatesoft.svn.core.wc.SVNRevision;
 import org.tmatesoft.svn.core.wc.SVNUpdateClient;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
-public class SvnDeal {
+public class SvnUtils {
 	private SVNClientManager clientManager;
 	private ISVNAuthenticationManager authManager;
 	private SVNRepository repository;
@@ -28,7 +28,7 @@ public class SvnDeal {
 	 * @param svnPasswd   svn用户密码
 	 * @throws SVNException 异常信息
 	 */
-	public SvnDeal(String svnUrl, String svnUsername, String svnPasswd) throws SVNException {
+	public SvnUtils(String svnUrl, String svnUsername, String svnPasswd) throws SVNException {
 		try {
 			this.createDefaultAuthenticationManager(svnUsername, svnPasswd);
 			this.authSvn(svnUrl);
@@ -387,7 +387,7 @@ public class SvnDeal {
 			String workspace = "C:\\test";
 			String upfile = "/q/w/a.txt,b.txt";
 			Boolean isOverwrite = true;
-			SvnDeal svnDeal = new SvnDeal(svnUrl, username, passwd);
+			SvnUtils svnDeal = new SvnUtils(svnUrl, username, passwd);
 			String[] fileArray = upfile.split(",");
 			for (int i = 0; i < fileArray.length; i++) {
 				String filePath = fileArray[i];
