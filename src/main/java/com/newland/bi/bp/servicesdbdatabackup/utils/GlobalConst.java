@@ -11,7 +11,11 @@ import java.util.List;
  */
 public class GlobalConst {
 	/**
-	 *
+	 * 备份数据库信息
 	 */
 	public static List<DBConfBean> dbconfList = new ArrayList<>(10);
+	/**
+	 * 备份文件主目录
+	 */
+	public static String backupFilePath = "";
 }
