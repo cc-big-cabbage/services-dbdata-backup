@@ -31,13 +31,11 @@ import javax.print.attribute.standard.NumberUp;
 	@Autowired Environment environment;
 	@Autowired WeixinServices weixinServices;
 	@Autowired DBBackupServices dbBackupServices;
-
 	@Override public void run(String... args) throws Exception {
 		log.info(">>>>>>>>>>>>>>> 启动初始化任务 >>>>>>>>>>>>>>>");
 		initConf();
 		log.info("<<<<<<<<<<<<<<<< 完成初始化任务 <<<<<<<<<<<<<<<");
 	}
-
 	/**
 	 * 初始化配置文件
 	 */
@@ -54,7 +52,7 @@ import javax.print.attribute.standard.NumberUp;
 				String password = environment.getProperty("newland.dbconfig." + dbname + ".password");
 				String keynames = environment.getProperty("newland.dbconfig." + dbname + ".key-names");
 				int maxTotal = NumberUtils.toInt(environment.getProperty("newland.dbconfig." + dbname + ".max-total"), 1000);
-				if (maxTotal > 100000) {
+				if (maxTotal > 100000 || maxTotal == 0) {
 					maxTotal = 100000;
 				}
 				DBConfBean dbConfBean = new DBConfBean(ip, port, dbType, username, password, keynames, maxTotal);
@@ -77,16 +75,16 @@ import javax.print.attribute.standard.NumberUp;
 			log.info("GlobalConst.sendMailFlag=" + GlobalConst.sendMailFlag);
 			log.info("GlobalConst.mailFrom=" + GlobalConst.mailFrom);
 			log.info("GlobalConst.mailTos=" + JSON.toJSONString(GlobalConst.mailTos));
-			GlobalConst.dbconfList.forEach(item -> {
-				int result = dbBackupServices.backup(item);
-				switch (result) {
-				case 1001:
-					weixinServices.sendNotice("不支持的数据库类型[" + item.getDbType() + "].");
-					break;
-				default:
-					break;
-				}
-			});
+			//			GlobalConst.dbconfList.forEach(item -> {
+			//				int result = dbBackupServices.backup(item);
+			//				switch (result) {
+			//				case 1001:
+			//					weixinServices.sendNotice("不支持的数据库类型[" + item.getDbType() + "].");
+			//					break;
+			//				default:
+			//					break;
+			//				}
+			//			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
