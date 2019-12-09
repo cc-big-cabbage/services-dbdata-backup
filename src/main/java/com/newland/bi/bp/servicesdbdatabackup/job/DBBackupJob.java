@@ -27,8 +27,7 @@ import org.springframework.stereotype.Component;
 	 * @time : 9:18
 	 * @desc : 每天12：30和20：30启动备份任务
 	 */
-	//@Scheduled(cron = "0 30 12,22 * * *")
-	public void backup() {
+	@Scheduled(cron = "0 30 12,22 * * *") public void backup() {
 		if (GlobalConst.dbconfList == null || GlobalConst.dbconfList.size() <= 0) {
 			weixinServices.sendNotice("没有需要备份的数据库.");
 			return;

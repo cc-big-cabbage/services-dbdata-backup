@@ -6,6 +6,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 /**
@@ -15,9 +17,24 @@ import java.io.File;
  * @modified By：
  * @version: $
  */
-@Component @Slf4j public class DBBackupServices {
+@RestController @Component @Slf4j public class DBBackupServices {
 	@Autowired MysqlBackupServices mysqlBackupServices;
-
+	@Autowired WeixinServices weixinServices;
+	/**
+	 * 手工备份
+	 */
+	@GetMapping("/backup/") public void backup() {
+		GlobalConst.dbconfList.forEach(item -> {
+			int result = backup(item);
+			switch (result) {
+			case 1001:
+				weixinServices.sendNotice("不支持的数据库类型[" + item.getDbType() + "].");
+				break;
+			default:
+				break;
+			}
+		});
+	}
 	/**
 	 * @param : * @param null
 	 * @return :
@@ -43,10 +60,9 @@ import java.io.File;
 			if (!baseFile.exists()) {
 				FileUtils.forceMkdir(baseFile);
 			}
-			File backupFilePath = new File(
-					baseFile.getAbsoluteFile() + File.separator + DateFormatUtils.format(System.currentTimeMillis(), "yyyyMM") + File.separator + DateFormatUtils.format(System.currentTimeMillis(),
-																																										 "yyyyMMdd") + File.separator
-							+ DateFormatUtils.format(System.currentTimeMillis(), "HH"));
+			File backupFilePath = new File(baseFile.getAbsoluteFile() + File.separator + DateFormatUtils.format(System.currentTimeMillis(), "yyyyMM") + File.separator
+												   + DateFormatUtils.format(System.currentTimeMillis(), "yyyyMMdd") + File.separator
+												   + DateFormatUtils.format(System.currentTimeMillis(), "HH"));
 			//判断数据库类型
 			String dbType = dbConfBean.getDbType();
 			if ("mysql".equalsIgnoreCase(dbType)) {
