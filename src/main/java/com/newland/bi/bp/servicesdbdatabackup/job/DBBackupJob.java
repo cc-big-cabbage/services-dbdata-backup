@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 @Component @Slf4j @EnableScheduling public class DBBackupJob {
 	@Autowired WeixinServices weixinServices;
 	@Autowired DBBackupServices dbBackupServices;
-
 	/**
 	 * @param : * @param null
 	 * @return :
@@ -28,7 +27,8 @@ import org.springframework.stereotype.Component;
 	 * @time : 9:18
 	 * @desc : 每天12：30和20：30启动备份任务
 	 */
-	@Scheduled(cron = "0 30 12,20 * * *") public void backup() {
+	//@Scheduled(cron = "0 30 12,22 * * *")
+	public void backup() {
 		if (GlobalConst.dbconfList == null || GlobalConst.dbconfList.size() <= 0) {
 			weixinServices.sendNotice("没有需要备份的数据库.");
 			return;
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component;
 			String keynames = item.getKeynames();
 			if (StringUtils.isBlank(keynames)) {
 				weixinServices.sendNotice("没有指定需要备份的数据表[" + JSON.toJSONString(item) + "].");
-			}else {
+			} else {
 				int result = dbBackupServices.backup(item);
 				switch (result) {
 				case 1001:

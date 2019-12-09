@@ -77,16 +77,16 @@ import javax.print.attribute.standard.NumberUp;
 			log.info("GlobalConst.sendMailFlag=" + GlobalConst.sendMailFlag);
 			log.info("GlobalConst.mailFrom=" + GlobalConst.mailFrom);
 			log.info("GlobalConst.mailTos=" + JSON.toJSONString(GlobalConst.mailTos));
-			//			GlobalConst.dbconfList.forEach(item -> {
-			//				int result = dbBackupServices.backup(item);
-			//				switch (result) {
-			//				case 1001:
-			//					weixinServices.sendNotice("不支持的数据库类型[" + item.getDbType() + "].");
-			//					break;
-			//				default:
-			//					break;
-			//				}
-			//			});
+			GlobalConst.dbconfList.forEach(item -> {
+				int result = dbBackupServices.backup(item);
+				switch (result) {
+				case 1001:
+					weixinServices.sendNotice("不支持的数据库类型[" + item.getDbType() + "].");
+					break;
+				default:
+					break;
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

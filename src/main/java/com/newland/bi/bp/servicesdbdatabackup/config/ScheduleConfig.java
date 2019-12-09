@@ -28,14 +28,13 @@ import java.util.concurrent.Executor;
 		TaskScheduler taskScheduler = taskScheduler();
 		scheduledTaskRegistrar.setTaskScheduler(taskScheduler);
 	}
-
 	/**
 	 * 多线程配置
 	 * @return
 	 */
 	@Bean(destroyMethod = "shutdown") public ThreadPoolTaskScheduler taskScheduler() {
 		ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-		scheduler.setPoolSize(500);
+		scheduler.setPoolSize(100);
 		// 设置线程名前缀
 		scheduler.setThreadNamePrefix("task-");
 		// 线程内容执行完后60秒停在
@@ -44,7 +43,6 @@ import java.util.concurrent.Executor;
 		scheduler.setWaitForTasksToCompleteOnShutdown(true);
 		return scheduler;
 	}
-
 	/**
 	 * 异步任务
 	 * @return
@@ -53,7 +51,6 @@ import java.util.concurrent.Executor;
 		Executor executor = taskScheduler();
 		return executor;
 	}
-
 	/**
 	 * 异常处理
 	 * @return
